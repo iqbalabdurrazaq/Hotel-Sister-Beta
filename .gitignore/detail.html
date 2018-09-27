@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hotel Sister || Detail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="setServer.js"></script>
+	<script type="text/javascript">
+
+		/*
+
+		function getURLParameter(name) {
+		  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+		}
+
+		var app = angular.module('myHotel', []);
+		app.controller('hotel', function($scope, $http) {
+
+		    $scope.funcLogout = function(){
+		    	sessionStorage.clear();
+		    	window.location.href = 'login.html'
+		    }
+
+			$scope.init = function(){
+
+				//session nama, menampilkan nama user yang login.
+				var tampung = sessionStorage.email;
+				
+				if (typeof(tampung) == "" || tampung == null)
+				{
+					var url = "index.html";
+					location.href=url;
+				}
+				else
+				{
+					$scope.nama = "Welcome, "+tampung;
+					$scope.slogin = true;
+					$scope.blogin = false;
+				}
+				var myVar = setTimeout(showPage, 3000);
+					
+					//menampilkan gambar hotel dan trayek kendaraan menuju hotel
+					var sId1 = getURLParameter('id');
+				    var urls1 = "http://"+server+"/serverClient/JSON/api_gallery_view2.php?id="+sId1;
+
+				    var urls2 = "http://tirtatransport.000webhostapp.com/serverHotelSister/api_notrayek.php?trayekid="+sId1;
+				    
+				    $http.get($urls1).then(function(response){
+				    	$scope.detail = response.data.fields.records;
+				    }, function(errorData){
+				    	alert("Terjadi Kesalahan");
+				    });
+
+				    $http.get($urls2).then(function(response){
+				    	$scope.trayek = response.data.fields.records;
+				    }, function(errorData){
+				    	alert("Terjadi Kesalahan");
+				    });
+			}
+
+		});
+
+		*/
+	</script>
+	</head>
+	<body>
+		<div class="fh5co-loader"></div>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div ng-app="myHotel" ng-controller="hotel" ng-init="init()">
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>Hotel Sister</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<div ng-show="blogin">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li><a href="index.html">Home</a></li>
+							<li class="active"><a href="hotel.html">Hotel</a></li>
+							<li><a  href="login.html">{{nama}}</a></li>
+						</ul>
+						</div>
+
+						<!-- Menu Sudah Login -->
+						<div ng-show="slogin">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li><a href="index.html">Home</a></li>
+							<li class="active"><a href="hotel.html">Hotel</a></li>
+							<li><a ng-click="funcLogout()" href="">{{nama}}</a></li>
+						</ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</header>
+		</div>
+
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/layer/layer_hotel.jpg);">
+				<div class="desc">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-5 col-md-5">
+		<div class="tabulation animate-box">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation">
+					<a href="#flights" aria-controls="flights" role="tab" data-toggle="tab">Hotels</a>
+				</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="hotels">
+					<div class="row">
+						<div class="col-xxs-12 col-xs-6 mt alternate">
+							<div class="input-field">
+							<label for="date-start">Check In:</label>
+							<input type="text" class="form-control" id="date-start" placeholder="mm/dd/yyyy"/>
+						</div>
+					</div>
+					<div class="col-xxs-12 col-xs-6 mt alternate">
+						<div class="input-field">
+							<label for="date-end">Check Out:</label>
+							<input type="text" class="form-control" id="date-end" placeholder="mm/dd/yyyy"/>
+						</div>
+					</div>
+					<div class="col-sm-12 mt">
+						<section>
+							<label for="class">Rooms:</label>
+							<select class="cs-select cs-skin-border">
+								<option value="" disabled selected>1</option>
+								<option value="economy">1</option>
+								<option value="first">2</option>
+								<option value="business">3</option>
+							</select>
+						</section>
+					</div>
+					<div class="col-xxs-12 col-xs-6 mt">
+						<section>
+							<label for="class">Adult:</label>
+							<select class="cs-select cs-skin-border">
+								<option value="" disabled selected>1</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+						</section>
+					</div>
+					<div class="col-xxs-12 col-xs-6 mt">
+						<section>
+							<label for="class">Children:</label>
+							<select class="cs-select cs-skin-border">
+								<option value="" disabled selected>1</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+						</section>
+					</div>
+					<div class="col-xs-12">
+						<input type="submit" class="btn btn-primary btn-block" value="Book Hotel">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Office Center</h3>
+							<p class="m-b-10"><i class="icon-pencil"></i> Hotel Sister<span>Kode Pos 12750</span> <span>Kalibata, </br>Jakarta Selatan </span><span>Indonesia</span></p>
+							<p class="m-b-10"><i class="icon-phone"></i> Phone:(+62) 87 887 142 686 </p>
+							<p><i class="icon-envelope"></i> hotelsister@gmail.com</p>
+						</div>
+						<div class="col-md-3"></div>
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Category</h3>
+							<ul>
+								<li><a href="#">Aryaduta Hotel</a></li>
+								<li><a href="#">The Ritz Carlton Hotel</a></li>
+								<li><a href="#">Four Season Hotel</a></li>
+								<li><a href="#">Grand Melia Hotel</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 col-sm-3 fh5co-footer-link">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Informations</h3>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">FAQs</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+							</p>
+							<p>Copyright 2016 All Rights Reserved. <br>Made with <i class="icon-heart3"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+			</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>

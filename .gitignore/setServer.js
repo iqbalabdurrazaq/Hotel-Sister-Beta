@@ -1,0 +1,1 @@
+var server="iqbalabdurrazaq.000webhostapp.com/";

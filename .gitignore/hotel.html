@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hotel Sister</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="setServer.js"></script>
+	<script type="text/javascript">
+
+		/*function getURLParameter(name) {
+		  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.hotel) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+		}*/
+
+		var app = angular.module('myHotel', []);
+		app.controller('hotel', function($scope, $http) {
+			
+			$scope.init = function(){
+				var tampung = sessionStorage.nama;
+				
+				if (typeof(tampung) == "" || tampung == null)
+				{
+					$scope.nama = "login";
+					$scope.slogin = false;
+					$scope.blogin = true;
+				}
+				else
+				{
+					$scope.nama = tampung;
+					$scope.slogin = true;
+					$scope.blogin = false;
+				}
+				var myVar = setTimeout(showPage, 3000);
+			}
+
+			$scope.goView = function(a){
+		    	var url = "details.html?id="+a;
+		    	location.href=url;
+		    }
+
+		    $scope.funcSearch = function(){
+		    	var cari = $scope.txtseacrh;
+		    	if(cari == null|| cari==""){
+		    		$("#errModal1").modal();
+		    		return false;
+		    	}else{
+		    		var url="search.html?search="+cari;
+		    		location.href=url;
+		    		return true;
+		    	}
+		    }
+
+		    $scope.funcLogout = function(){
+		    	sessionStorage.clear();
+		    	window.location.href = 'login.html';
+		    }
+
+		    $url= "http://"+server+"/serverClient/JSON/api_gallery_semua.php";
+
+		    $http.get($url).then(
+		    	function (response) {
+		    			$scope.hotel = response.data.fields.records;
+		    			$scope.infoNotFound2 = true;
+		    	}, function (errorData) {
+	       			var url = "";
+	       	});
+
+
+		    /*var sId= getURLParameter('search');
+		    var searchs = encodeURI(sId);
+
+		    $scope.cari = searchs;
+
+		    if($scope.txtseacrh =="" || $scope.txtseacrh==null){
+		    	$url= "http://"+server+"/serverClient/JSON/api_gallery_semua.php";
+		    }else{
+		    	$url= "http://"+server+"/serverClient/JSON/api_gallery_search.php?srch="+sId;
+		    //}
+		
+		    
+		    $http.get($url).then(
+		    	function (response) {
+		    		var kondisi = response.data.fields.records;
+		    		if(kondisi == "" || kondisi == null){
+		    			$scope.infoNotFound=true;
+		    			$scope.infoNotFound2=false;
+		    		}else{
+		    			$scope.hotel = response.data.fields.records;
+		    			$scope.infoNotFound2=true;
+		    			$scope.infoNotFound=false;
+		    		}
+		    	}, function (errorData) {
+	       			var url = "";
+	       	});*/
+
+		});
+	</script>
+
+	</head>
+	<body>
+		<div class="fh5co-loader"></div>
+		<div id="fh5co-wrapper" ng-app="myHotel" ng-controller="hotel" ng-init="init()">
+		<div id="fh5co-page">
+
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>Hotel Sister</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<!-- Menu Belum Login -->
+						<div ng-show="blogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li ><a href="index.html">Home</a></li>
+							<li class="active"><a href="hotel.html">Hotel</a></li>
+							<li><a  href="login.html">{{nama}}</a></li>
+						</ul>
+						</nav>
+						</div>
+
+						<!-- Menu Sudah Login -->
+						<div ng-show="slogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li ><a href="index.html">Home</a></li>
+							<li class="active"><a href="hotel.html">Hotel</a></li>
+							<li><a ng-click="funcLogout()" href="">{{nama}}</a></li>
+							<li><a href="orderhistory.html">OrderHistory</a></li>
+						</ul>
+						</nav>
+						</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+	
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/layer/layer_hotel.jpg);">
+				<div class="desc">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-5 col-md-5">
+								<a href="index.html" id="main-logo"><img src="images/logo/logohs.png" class="img-responsive"></a>
+								
+							</div>
+							<div class="desc2 animate-box">
+								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
+									<span class="price">------</span><br>
+									<span class="price">------</span>
+									<!-- <p><a class="btn btn-primary btn-lg" href="#">Get Started</a></p> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+
+		<div id="fh5co-tours" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9" >
+						<div class="col-md-6 col-md-offset-3 text-center heading-section">
+							<h3>Popular hotel </h3>
+						</div>
+						<div class="row">
+							<div ng-repeat="x in hotel" class="col-md-6 col-sm-6 fh5co-tours">
+								<div ng-click="goView(x.id)" href=""><img src='{{ x.gambar }}' class="img-responsive">
+									<div class="desc">
+										<span></span>
+										<a ng-click="goView(x.id)" href=""><h3>{{ x.nama }}</h3></a>
+										<span>1 nights</span>
+										<span class="price">Rp. {{ x.harga }}</span>
+										<a ng-click="goView(x.id)" class="btn btn-primary btn-outline" href="">Book Now <i class="icon-arrow-right22"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="sidebar-wrap ">
+							<div class="side search-wrap">
+								<form>
+				              	<div class="row">
+				                <div class="col-md-12">
+				                  <div class="form-group">
+				                    <div class="form-field">
+				                      <input ng-model="txtseacrh" class="form-control" placeholder="Find Your Hotel">
+				                    </div>
+				                  </div>
+				                </div>
+				                <div class="col-md-12">
+				                	<button type="button" ng-click="funcSearch()" class="btn btn-primary btn-block">Find</button>
+				                </div>
+				              	</div>
+				              	</form>
+							</div>
+							<div class="side search-wrap">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="sidebar-heading">Category Daerah</h3>
+										<form method="post" class="colorlib-form-2">
+										   <div class="form-check">
+												<input type="checkbox" class="form-check-input" id="exampleCheck1">
+												<label class="form-check-label" for="exampleCheck1">
+													<h4 class="place">Jakarta Barat</h4>
+												</label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+													<h4 class="place">Jakarta Timur</h4>
+												</label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+													<h4 class="place">Jakarta Pusat</h4>
+												</label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+													<h4 class="place">Jakarta Selatan</h4>
+												</label>
+										   </div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal Pencarian Salah -->
+		<div class="modal fade" id="errModal1" role="dialog">
+			<div class="modal-dialog">	
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">
+					  	&times;</button>
+					  <h4 class="modal-title">Peringatan</h4>
+					</div>
+					<div class="modal-body">
+					  <p>Silahkan ketikkan yang dicari</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">
+					  	Close</button>
+					</div>
+				</div>
+			</div>
+		</div>  
+
+		<div id="fh5co-testimonial" style="background-color:#F78536;">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>Happy Clients</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+						</blockquote>
+						<p class="author">John Doe, CEO<span class="subtext">Creative Director</span></p>
+					</div>
+					
+				</div>
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.&rdquo;</p>
+						</blockquote>
+						<p class="author">John Doe, CEO <span class="subtext">Creative Director</span></p>
+					</div>
+					
+					
+				</div>
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+						</blockquote>
+						<p class="author">John Doe, Founder <span class="subtext">Creative Director</span></p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Office Center</h3>
+							<p class="m-b-10"><i class="icon-pencil"></i> Hotel Sister<span>Kode Pos 12750</span> <span>Kalibata, </br>Jakarta Selatan </span><span>Indonesia</span></p>
+							<p class="m-b-10"><i class="icon-phone"></i> Phone:(+62) 87 887 142 686 </p>
+							<p><i class="icon-envelope"></i> hotelsister@gmail.com</p>
+						</div>
+						<div class="col-md-3"></div>
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Category</h3>
+							<ul>
+								<li><a href="#">Aryaduta Hotel</a></li>
+								<li><a href="#">The Ritz Carlton Hotel</a></li>
+								<li><a href="#">Four Season Hotel</a></li>
+								<li><a href="#">Grand Melia Hotel</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 col-sm-3 fh5co-footer-link">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Informations</h3>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">FAQs</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+							</p>
+							<p>Copyright 2016 All Rights Reserved. <br>Made with <i class="icon-heart3"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hotel Sister || Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="setServer.js"></script>
+	<script type="text/javascript">			
+		var app = angular.module('myApp', []);
+		app.controller('galleryCtrl', function($scope, $http) {
+
+			$scope.init = function(){
+				var tampung = sessionStorage.nama;
+				
+				if (typeof(tampung) == "" || tampung == null)
+				{
+					$scope.nama = "login";
+					$scope.slogin = false;
+					$scope.blogin = true;
+				}
+				else
+				{
+					$scope.nama = tampung;
+					$scope.slogin = true;
+					$scope.blogin = false;
+				}
+			}
+
+			$scope.goView = function(a){
+		    	var url = "details.html?id="+a;
+		    	location.href=url;
+		    }
+
+		    $scope.funcsearch = function(){
+		    	var cari = $scope.txtseacrh;
+		    	if(cari==null||cari==""){
+		    		$("errModal").modal();
+		    		return false;
+		    	}else{
+		    		var url="search.html?srch"+cari;
+		    		location.href=url;
+		    		return true;
+		    	}
+		    }
+
+		    $scope.funcLogout = function(){
+				sessionStorage.clear();
+				window.location.href = 'login.html';
+			}
+
+		    $http.get("http://"+server+"/serverClient/JSON/api_gallery2.php").then(
+		    	function (response) {
+		    		$scope.hotel = response.data.fields.records;
+		    	}, function (errorData) {
+	       			var url = "";
+	       		});
+
+		});	
+	</script>
+	</head>
+	<body>
+		<div class="fh5co-loader"></div>
+		<div id="fh5co-wrapper" ng-app="myApp" ng-controller="galleryCtrl" ng-init="init()">
+		<div id="fh5co-page">
+
+		<header id="fh5co-header-section">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Hotel Sister</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+
+						<!-- Menu Belum Login -->
+						<div ng-show="blogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="hotel.html">Hotel</a></li>
+							<li><a  href="login.html">{{nama}}</a></li>
+						</ul>
+						</nav>
+						</div>
+
+						<!-- Menu Sudah Login -->
+						<div ng-show="slogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="hotel.html">Hotel</a></li>
+							<li><a ng-click="funcLogout()" href="">{{nama}}</a></li>
+							<li><a href="orderhistory.html">OrderHistory</a></li>
+						</ul>
+						</nav>
+						</div>
+						
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+
+		<!-- side -->
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/hotel/four_season.jpg);">
+			</div>
+
+		</div>
+		
+		<div id="fh5co-tours" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section">
+						<h3>Hot Hotel</h3>
+						<p>Kumpulan Hotel dari penjuru Jakarta tersedia di Hotel Sister.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div ng-repeat="x in hotel" class="col-md-4 col-sm-6 fh5co-tours" data-animate-effect="fadeIn">
+						<div ng-click="goView(x.id)" href="#"><img src='{{ x.gambar }}' alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+							<div class="desc">
+								<span></span>
+								<a ng-click="goView(x.id)" href=""><h3>{{ x.nama }}</h3></a>
+								<span>{{ x.daerah }}</span>
+								<span class="price">{{ x.harga }}</span>
+								<a ng-click="goView(x.id)" class="btn btn-primary btn-outline" href="#">Book Now <i class="icon-arrow-right22"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 text-center animate-box">
+						<p><a class="btn btn-primary btn-outline btn-lg" href="hotel.html">See All Offers <i class="icon-arrow-right22"></i></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="fh5co-destination">
+			<div class="tour-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<ul id="fh5co-destination-list" class="animate-box">
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_1.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Kemang</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_2.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Sentul</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_3.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Depok</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_4.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Kuningan</h2>
+									</div>
+								</a>
+							</li>
+
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_5.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Sudirman</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-half text-center">
+								<div class="title-bg">
+									<div class="case-studies-summary">
+										<h2>Most Popular Destinations</h2>
+										<span></span>
+									</div>
+								</div>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_6.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Senayan</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_7.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Ancol</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_8.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Pondok Indah</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_9.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>PIK</h2>
+									</div>
+								</a>
+							</li>
+							<li class="one-forth text-center" style="background-image: url(images/hotel/home_10.jpg); ">
+								<a href="#">
+									<div class="case-studies-summary">
+										<h2>Tebet</h2>
+									</div>
+								</a>
+							</li>
+						</ul>		
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- fh5co-blog-section -->
+	</div>
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Office Center</h3>
+							<p class="m-b-10"><i class="icon-pencil"></i> Hotel Sister<span>Kode Pos 12750</span> <span>Kalibata, </br>Jakarta Selatan </span><span>Indonesia</span></p>
+							<p class="m-b-10"><i class="icon-phone"></i> Phone:(+62) 87 887 142 686 </p>
+							<p><i class="icon-envelope"></i> hotelsister@gmail.com</p>
+						</div>
+						<div class="col-md-3"></div>
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Category</h3>
+							<ul>
+								<li><a href="#">Aryaduta Hotel</a></li>
+								<li><a href="#">The Ritz Carlton Hotel</a></li>
+								<li><a href="#">Four Season Hotel</a></li>
+								<li><a href="#">Grand Melia Hotel</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 col-sm-3 fh5co-footer-link">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Informations</h3>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">FAQs</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+							</p>
+							<p>Copyright 2016 All Rights Reserved. <br>Made with <i class="icon-heart3"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hotel Sister || Detail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="setServer.js"></script>
+	<script type="text/javascript">
+
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			vars[key] = value;
+			});
+			return vars;
+		}
+
+		<!-- set timeout function -->	
+		var url = "orderhistory.html";
+	    var delay = "2000";
+
+	    function GoToURL()
+	    {
+	        if(typeof IE_fix != "undefined") // IE8 and lower fix to pass the http referer
+	        {
+	            var referLink = document.createElement("a");
+	            referLink.href = url;
+	            document.body.appendChild(referLink);
+	            referLink.click();
+	        }
+	        else { window.location.replace(url); } // All other browsers
+	    }
+		<!-- //set timeout function -->
+
+		var app = angular.module('myHotel', []);
+		app.controller('hotel', function($scope, $http) {
+
+		    $scope.funcLogout = function(){
+		    	sessionStorage.clear();
+		    	window.location.href = 'login.html'
+		    }
+		    
+		    $scope.funcBack = function(a){
+		    	sessionStorage.removeItem("malam");
+		    	sessionStorage.removeItem("jkmr");
+		    	sessionStorage.removeItem("nama_hotel");
+		    	window.location.href = 'details.html?id='+a;
+		    }
+
+			$scope.init = function(){
+				//session nama, menampilkan nama user yang login.
+				var tampung = sessionStorage.nama;
+				
+				if (typeof(tampung) == "" || tampung == null)
+				{
+					var url = "index.html";
+					location.href=url;
+				}
+				else
+				{
+					$scope.nama = tampung;
+					$scope.slogin = true;
+					$scope.blogin = false;
+				}
+			}
+
+				$scope.idhotel = sessionStorage.idhotel;
+				$scope.iduser = sessionStorage.iduser;
+				$scope.malam = sessionStorage.malam;
+				$scope.jkmr = sessionStorage.jkmr;
+				$scope.nama_hotel = sessionStorage.nama_hotel;
+				$scope.nama = sessionStorage.nama;
+				$scope.harga = sessionStorage.harga;
+
+				var harga = $scope.harga;
+				var malam = $scope.malam;
+				var jkmr = $scope.jkmr;
+				var total1 = harga * malam;
+				var total2 = total1 * jkmr;
+				$scope.total = total2;
+
+			$scope.funcCheckout = function(){
+
+				var idhotel2 = $scope.idhotel;
+				var iduser2 = $scope.iduser;
+				var malam2 = $scope.malam;
+				var jkmr2 = $scope.jkmr;
+				var nama_hotel2 = $scope.nama_hotel;
+				var harga2 = $scope.harga;
+				var nama2 = $scope.nama;
+				var total2 = $scope.total;
+				var invoice = Math.floor(Math.random() * 10000000);
+
+				$http.get("http://"+server+"/serverClient/JSON/api_checkout.php?iduser3="+iduser2+"&idhotel3="+idhotel2+"&nama3="+nama2+"&namahotel3="+nama_hotel2+"&total3="+total2+"&invoice="+invoice).then(function(response){
+						$scope.backgroundd = "background-color:#F78536;";
+						$scope.style_status = "color:white;";
+						$scope.status = "Pemberitahuan";
+						$scope.welcome = "Pemesanan Berhasil, Anda akan dialihkan ke Orderhistory";
+						$("#errModal").modal();
+						setTimeout(GoToURL, delay);
+				}, function(errorData){
+				    alert("System Error");
+				});
+			}
+
+		});
+	</script>
+	</head>
+	<body>
+		<div class="fh5co-loader"></div>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page" ng-app="myHotel" ng-controller="hotel" ng-init="init()">
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>Hotel Sister</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<!-- Menu Belum Login -->
+						<div ng-show="blogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="hotel.html">Hotel</a></li>
+							<li><a  href="login.html">{{nama}}</a></li>
+						</ul>
+						</nav>
+						</div>
+
+						<!-- Menu Sudah Login -->
+						<div ng-show="slogin">
+						<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li class="active"><a href="index.html">Home</a></li>
+							<li><a href="hotel.html">Hotel</a></li>
+							<li><a ng-click="funcLogout()" href="">{{nama}}</a></li>
+							<li><a href="orderhistory.html">OrderHistory</a></li>
+						</ul>
+						</nav>
+						</div>
+				</div>
+			</div>
+		</header>
+
+		<div id="fh5co-tours" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-4"><h3>Details Pemesanan</h3></div>
+				</div>
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<p>Nama </p>
+					</div>
+					<div class="col-md-3">
+						<p>: {{nama}}<p>
+					</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-3"></div>
+			    	<div class="col-md-4">
+						<p>Hotel </p>
+					</div>
+					<div class="col-md-3">
+						<p>: {{nama_hotel}}</p>
+					</div>					
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-3"></div>
+			    	<div class="col-md-4">
+						<p>Lama Penginapan </p>
+					</div>
+					<div class="col-md-3">
+						<p>: {{malam}} Malam</p>
+					</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-3"></div>
+			    	<div class="col-md-4">
+						<p>Jumlah Kamar Yang Dipesan </p>
+					</div>
+					<div class="col-md-3">
+						<p>: {{jkmr}} Kamar</p>
+					</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-3"></div>
+			    	<div class="col-md-4">
+			    		<p>Total Harga </p>
+			    	</div>
+			    	<div class="col-md-3">
+			    		<p>: Rp. {{total}}000</p>
+			    	</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-3"></div>
+			    	<div class="col-md-2">
+			    		<input ng-click="funcBack(idhotel)" type="submit" class="btn btn-primary btn-block" value="Back">
+			    	</div>
+			    	<div class="col-md-2"></div>
+			    	<div class="col-md-2">
+			    		<input ng-click="funcCheckout()" type="submit" class="btn btn-primary btn-block" value="Check Out">
+			    	</div>
+			    </div>
+			</div>
+		</div>
+
+		<!-- Modal Pesanan -->
+		<div class="modal fade" id="errModal" role="dialog"> 
+			<div class="modal-dialog">	
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style={{backgroundd}}>
+					  <button type="button" class="close" data-dismiss="modal">
+					  	&times;</button>
+					  <h4 class="modal-title" style={{style_status}}>{{status}}</h4>
+					</div>
+					<div class="modal-body">
+					  <p>{{welcome}}</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">
+					  	Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Office Center</h3>
+							<p class="m-b-10"><i class="icon-pencil"></i> Hotel Sister<span>Kode Pos 12750</span> <span>Kalibata, </br>Jakarta Selatan </span><span>Indonesia</span></p>
+							<p class="m-b-10"><i class="icon-phone"></i> Phone:(+62) 87 887 142 686 </p>
+							<p><i class="icon-envelope"></i> hotelsister@gmail.com</p>
+						</div>
+						<div class="col-md-3"></div>
+						<div class="col-md-2 col-sm-2 fh5co-footer-link">
+							<h3>Category</h3>
+							<ul>
+								<li><a href="#">Aryaduta Hotel</a></li>
+								<li><a href="#">The Ritz Carlton Hotel</a></li>
+								<li><a href="#">Four Season Hotel</a></li>
+								<li><a href="#">Grand Melia Hotel</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 col-sm-3 fh5co-footer-link">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Informations</h3>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">FAQs</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+							</p>
+							<p>Copyright 2016 All Rights Reserved. <br>Made with <i class="icon-heart3"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+	<script type="text/javascript">
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+		  acc[i].addEventListener("click", function() {
+		    this.classList.toggle("active");
+		    var panel = this.nextElementSibling;
+		    if (panel.style.maxHeight){
+		      panel.style.maxHeight = null;
+		    } else {
+		      panel.style.maxHeight = panel.scrollHeight + "px";
+		    } 
+		  });
+		}
+	</script>
+	</body>
+</html>

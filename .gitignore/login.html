@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hotel Sister || Account</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/funcNumber.js"></script>
+	<script src="js/md5.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="setServer.js"></script>
+	<script>
+
+	var app = angular.module("appR",[]);  
+	 app.controller("controlR", function($scope, $http){  
+	      	
+	      	$scope.funcRegister = function(){
+				
+				var nama_lengkap = document.getElementById("nama_lengkapL").value;
+				var email = document.getElementById("emailL").value;
+				var nohp = document.getElementById("nohpL").value;
+				var password = document.getElementById("passwordL")
+				var confirm_password = document.getElementById("confirm_passwordL");
+				
+				var pass = document.getElementById("confirm_passwordL").value;
+				
+				  if(password.value != confirm_password.value) {
+					confirm_password.setCustomValidity("Passwords Don't Match");
+				  } else {
+					confirm_password.setCustomValidity('');
+					
+					if (pass.length >= 6)
+					{
+						$http.get("http://"+server+"/serverClient/JSON/api_signup.php?nama_lengkap="+nama_lengkap+"&no_hp="+nohp+"&email="+email+"&password="+pass).then(
+						function (response) {
+						
+								var kondisi = response.data.data.regis[0]["tampung"];
+								
+								if (kondisi == "failed")
+								{
+									$scope.backgroundd = "background-color:red;";
+									$scope.style_status = "color:white;";
+									$scope.status = "Maaf, Register Gagal";
+									$scope.welcome = "Email Sudah Terdaftar";
+									$scope.tambah = "Lupa Password ? Silahkan Pilih Forgot Password";
+									$("#errModal2").modal();
+									document.getElementById('nama_lengkapL').value = "";	
+									document.getElementById('emailL').value = "";	
+									document.getElementById('nohpL').value = "";	
+									document.getElementById('passwordL').value = "";
+									document.getElementById('confirm_passwordL').value = "";
+
+								}
+								else 
+								{
+									$scope.backgroundd = "background-color:white;";
+									$scope.style_status = "color:green;";
+									$scope.status = "Register Berhasil !!";
+									$scope.welcome = "Silakan Untuk Login";
+									$scope.tambah = "";
+									$("#errModal2").modal();
+									document.getElementById('nama_lengkapL').value = "";	
+									document.getElementById('emailL').value = "";	
+									document.getElementById('nohpL').value = "";	
+									document.getElementById('passwordL').value = "";
+									document.getElementById('confirm_passwordL').value = "";
+
+									
+									<!-- //time delayed directing to page profiles -->
+									
+									return true;
+									
+								}
+							}, function (errorData) {
+								var url = "index.html";	
+								location.href=url;	
+								return false;
+							});
+					}
+				  }
+				
+				
+				password.onchange = validatePassword;
+				confirm_password.onkeyup = validatePassword;
+				
+			}  
+	 });
+
+	function funcSignin()
+	{
+		var email = document.getElementById("email").value;
+		var pass = md5(document.getElementById("password").value);
+		var sStatus;
+		var nNama ="";
+		var iduser="";
+		var urls = "http://"+server+"/serverClient/JSON/api_signin.php?email="+email+"&password="+pass;
+			$.ajax({
+			type: 'get',
+			url: urls,
+			dataType: 'json',
+			cache: false,
+			success: function(msg){	
+				for(i=0;i<msg.fields.records.length;i++){
+					sStatus = msg.fields.records[i].status;
+					nNama = msg.fields.records[i].nama;
+					iduser = msg.fields.records[i].iduser;				
+					if(sStatus == "OK")
+					{
+						sessionStorage.setItem("nama",nNama);
+						sessionStorage.setItem("iduser",iduser);
+						alert('Login Berhasil');		
+						window.location.href = 'index.html';
+					} else 
+					{
+						$("#errModal").modal();		
+						document.getElementById('email').value = "";	
+						document.getElementById('password').value = "";	
+						document.getElementById("email").focus(); 			
+					}
+				}
+			}
+		});	
+	}  
+	</script>
+	<script type="text/javascript">
+
+	</script>
+
+	</head>
+	<body>
+		<div class="fh5co-loader"></div>
+		<div id="fh5co-wrapper" ng-app="appR" ng-controller="controlR">
+		<div id="fh5co-page">
+
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>Hotel Sister</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="hotel.html">Hotel</a></li>
+							<li class="active"><a href="login.html">Login</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+	
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_5.jpg);">
+				<div class="desc">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-5 col-md-3">	</div>
+							<div class="col-sm-5 col-md-6">
+								<!-- <a href="index.html" id="main-logo">Travel</a> -->
+								<div class="tabulation ">
+
+								  <!-- Nav tabs -->
+								   <ul class="nav nav-tabs" role="tablist">
+								      <li class="active" role="presentation">
+								      	<a href="#flights" aria-controls="flights" role="tab" data-toggle="tab">Login</a>
+								      </li>
+								      <li role="presentation" >
+								    	   <a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Register</a>
+								      </li>
+								    </ul>
+
+								   <!-- Tab panes -->
+									<div class="tab-content">
+									 	<div role="tabpanel" class="tab-pane active" id="flights">
+										<div class="row">
+											<form >
+											
+													<label for="from">Email:</label>
+													<input type="email" class="form-control" id="email" placeholder="Email" required />
+													<label for="from">Password:</label>
+													<input type="password" class="form-control" id="password" placeholder="Password" required/>
+													<button type="button" class="btn btn-primary btn-block btn-flat" onclick="funcSignin()">Login</button>
+											</form>
+										</div>
+									 	</div>
+
+									 	<div role="tabpanel" class="tab-pane" id="hotels">
+									 	<div class="row">
+									 		<form>
+											<div class="col-xxs-12 col-xs-6">
+													<label >Nama Lengkap:</label>
+													<input id="nama_lengkapL" type="text" class="form-control" placeholder="Nama Lengkap" required />
+											</div>
+											<div class="col-xxs-12 col-xs-6">
+													<label>No HP:</label>
+													<input id="nohpL" maxlength="13"  type="text" class="form-control" placeholder="No HP" required/>
+											</div>
+											<div class="col-sm-12 mt">
+													<label >Email:</label>
+													<input id="emailL" type="email" class="form-control" placeholder="Email" required/>
+											</div>
+											<div class="col-xxs-12 col-xs-6 mt">
+													<label >Password:</label>
+													<input id="passwordL" minlength="6" id="pass" type="password" class="form-control" placeholder="Password" pattern=".{6,}"  title=" Password Minimal 6 Character" required/>
+											</div>
+											<div class="col-xxs-12 col-xs-6 mt">
+													<label >Confrim Password:</label>
+													<input minlength="6" 
+													id="confirm_passwordL" type="password" class="form-control" placeholder="Password" required/>
+											</div>
+											<div class="col-xs-12">
+												<input type="submit" ng-click="funcRegister()" class="btn btn-primary btn-block" value="Register">
+											</div>
+											</form>
+										</div>
+									 	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal Gagal Login -->
+		<div class="modal fade" id="errModal" role="dialog">
+			<div class="modal-dialog">	
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title">Peringatan</h4>
+					</div>
+					<div class="modal-body">
+					  <p>Maaf, Sign in gagal. email / password anda salah, Silahkan coba lagi</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal Regis -->
+		<div class="modal fade" id="errModal2" role="dialog"> 
+			<div class="modal-dialog">	
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style={{backgroundd}}>
+					  <button type="button" class="close" data-dismiss="modal">
+					  	&times;</button>
+					  <h4 class="modal-title" style={{style_status}}>{{status}}</h4>
+					</div>
+					<div class="modal-body">
+					  <p>{{welcome}} <br> {{tambah}}</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">
+					  	Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>About Travel</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Top Hotels</h3>
+							<ul>
+								<li><a href="#">Aryaduta Hotel</a></li>
+								<li><a href="#">The Ritz Carlton Hotel</a></li>
+								<li><a href="#">Four Season Hotel</a></li>
+								<li><a href="#">Grand Melia Hotel</a></li>
+							</ul>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Interest</h3>
+							<ul>
+								<li><a href="#">Beaches</a></li>
+								<li><a href="#">Family Travel</a></li>
+								<li><a href="#">Budget Travel</a></li>
+								<li><a href="#">Food &amp; Drink</a></li>
+								<li><a href="#">Honeymoon and Romance</a></li>
+							</ul>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Best Places</h3>
+							<ul>
+								<li><a href="#">Boracay Beach</a></li>
+								<li><a href="#">Dubai</a></li>
+								<li><a href="#">Singapore</a></li>
+								<li><a href="#">Hongkong</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p>Copyright 2016 All Rights Reserved. <br>Made with <i class="icon-heart3"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+	
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+	
+
+	</body>
+</html>
+
